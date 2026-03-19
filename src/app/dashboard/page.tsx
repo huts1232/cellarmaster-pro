@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { createClient } from '@supabase/supabase-js'
 import { Wine, BarChart3, TrendingUp, TrendingDown, Bell, Plus, DollarSign, MapPin, Clock, Flame, ArrowRight } from 'lucide-react'
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+import { WineChatbot } from '@/components/WineChatbot'
 
 const COLORS = ['#7c3aed', '#2563eb', '#059669', '#d97706', '#dc2626', '#8b5cf6', '#06b6d4', '#f43f5e']
 
@@ -171,6 +172,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
+      <WineChatbot wines={wines} />
     </div>
   )
 }
