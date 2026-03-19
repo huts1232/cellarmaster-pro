@@ -78,19 +78,26 @@ export default function CollectionPage() {
         ) : (
           <div className="space-y-2">
             {filtered.map(wine => (
-              <div key={wine.id} className="bg-white rounded-xl border p-4 flex items-center justify-between hover:shadow-sm transition-all">
+              <Link key={wine.id} href={`/wines/${wine.id}`} className="bg-white rounded-xl border p-4 flex items-center justify-between hover:shadow-md hover:border-purple-200 transition-all block">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-purple-50 flex items-center justify-center"><Wine className="h-5 w-5 text-purple-600" /></div>
+                  <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${wine.type === 'red' ? 'bg-red-50' : wine.type === 'white' ? 'bg-yellow-50' : wine.type === 'sparkling' ? 'bg-amber-50' : 'bg-purple-50'}`}>
+                    <Wine className={`h-5 w-5 ${wine.type === 'red' ? 'text-red-500' : wine.type === 'white' ? 'text-yellow-600' : 'text-purple-600'}`} />
+                  </div>
                   <div>
                     <p className="font-medium text-gray-900">{wine.name} {wine.vintage || ''}</p>
-                    <p className="text-xs text-gray-500">{wine.producer} · {wine.region || ''} {wine.country || ''} · {wine.quantity} btl</p>
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <span>{wine.producer}</span>
+                      {wine.region && <><span>·</span><span>{wine.region}</span></>}
+                      <span>·</span><span>{wine.quantity} btl</span>
+                      {wine.parker_score && <><span>·</span><span className="text-red-600 font-medium">RP {wine.parker_score}</span></>}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  {wine.purchase_price && <span className="text-sm font-semibold text-green-700">€{wine.purchase_price}</span>}
-                  <button onClick={() => handleDelete(wine.id)} className="text-gray-400 hover:text-red-500"><Trash2 className="h-4 w-4" /></button>
+                  {wine.current_market_value && <span className="text-sm font-semibold text-green-700">€{wine.current_market_value}</span>}
+                  <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(wine.id) }} className="text-gray-400 hover:text-red-500"><Trash2 className="h-4 w-4" /></button>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
